@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    /* ============================
+       Core Compilation Options
+    ============================ */
+    "target": "ES2020",
+    "module": "CommonJS",
+    "lib": ["ES2020"],
+    "outDir": "dist",
+    "rootDir": "src",
+
+    /* ============================
+       Strictness & Type Safety
+    ============================ */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* ============================
+       Module Resolution
+    ============================ */
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    /* ============================
+       Build & Performance
+    ============================ */
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "removeComments": true,
+
+    /* ============================
+       Developer Experience
+    ============================ */
+    "types": ["node"],
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@modules/*": ["modules/*"],
+      "@middlewares/*": ["middlewares/*"],
+      "@utils/*": ["utils/*"]
+    }
+  },
+
+  /* ============================
+     What to Compile
+  ============================ */
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+}
