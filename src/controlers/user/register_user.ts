@@ -1,35 +1,48 @@
-import {Request,Response}from "express"
-import { prisma } from "../../db/prisma/client"
+import { Request, Response } from "express";
+import { prisma } from "../../db/prisma/client";
 import { ApiError } from "../../middlewares/Error";
 import { otpModel } from "../../db/mongoose/otp_schema";
-const RegisterUser=async(req:Request,res:Response)=>{
-  try{
+import Hash from "../../utils/hash"
+const RegisterUser = async (req: Request, res: Response) => {
+  const { email, password, name, otp } = req.body;
 
-    const {email,password,name,otp}=req.body
-    if(!otp){return res.status(403).json({message:'otp cannot be empty'})}
-    const existingUser = await prisma.user.findUnique({
+    if (!email || !password || !otp) {
+    throw new ApiError("Email, password and OTP are required", 400);
+  }
+
+  const existingUser = await prisma.user.findUnique({
     where: { email },
   });
-    const matchOtp=await otpModel.findOne({email})
-    if(!matchOtp){
-      throw new ApiError('otp expired',400)
-    } 
-    if(email!==matchOtp.email){
-      throw new ApiError('different email not allowed',403)
-    }
-    if(matchOtp.otp!==Number(otp)){
-      throw new ApiError('otp not matched',400)
-    }
 
   if (existingUser) {
     throw new ApiError("User already exists", 400);
   }
-  
-  const newUser=await prisma.user.create({data:{email,name,password}})
-  res.status(201).json({success:true,message:'created user',data:newUser})
-  
-}catch(e){
-  new ApiError('internal error',500)
-}
-}
-export default RegisterUser
+
+  const matchOtp = await otpModel.findOne({ email });
+
+  if (!matchOtp) {
+    throw new ApiError("OTP expired or invalid", 400);
+  }
+
+  if (matchOtp.otp !== Number(otp)) {
+    throw new ApiError("OTP not matched", 400);
+  }
+  const hashPassword=await Hash(password,12)
+  const newUser = await prisma.user.create({
+    data: {
+      email,
+      name,
+      password:hashPassword, 
+    },
+  });
+
+  await otpModel.deleteOne({ email });
+
+  res.status(201).json({
+    success: true,
+    message: "User created successfully",
+    data: newUser,
+  });
+};
+
+export default RegisterUser;
