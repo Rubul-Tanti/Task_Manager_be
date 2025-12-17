@@ -3,6 +3,7 @@ import {Request,Response} from 'express'
 import { EmailService } from '../services/send_email'
 import GenerateOtp from '../utils/generate_otp'
 import  { otpModel } from "../db/mongoose/otp_schema"
+import { ApiError } from '../middlewares/Error'
 const email_verifation=async(req:Request,res:Response)=>{
     try{ 
         const {email}=req.body
@@ -13,7 +14,7 @@ const email_verifation=async(req:Request,res:Response)=>{
         await otpModel.create({otp,email})
         res.status(200).json({success:true})
     }catch(e){  
-console.log(e)
+            new ApiError('internal server Error',500)
     }
 }
 export default email_verifation
