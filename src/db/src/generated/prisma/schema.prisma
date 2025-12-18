@@ -16,6 +16,7 @@ enum Role {
 enum TaskStatus {
   TODO
   IN_PROGRESS
+  IN_REVIEW
   DONE
 }
 
@@ -31,41 +32,35 @@ model User {
 }
 
 model Organization {
-  id          String  @id @default(uuid())
+  id          String       @id @default(uuid())
   name        String
   description String?
-
+  ownerId     String
   memberships Membership[]
   projects    Project[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 }
 
 model Membership {
-  id   String @id @default(uuid())
-  role Role   @default(MEMBER)
-
+  id             String       @id @default(uuid())
+  role           Role         @default(MEMBER)
   userId         String
   organizationId String
-
-  user         User         @relation(fields: [userId], references: [id])
-  organization Organization @relation(fields: [organizationId], references: [id])
-
-  createdAt DateTime @default(now())
+  user           User         @relation(fields: [userId], references: [id])
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime     @default(now())
 
   @@unique([userId, organizationId])
 }
 
 model Project {
-  id          String  @id @default(uuid())
-  name        String
-  description String?
-
+  id             String       @id @default(uuid())
+  name           String
+  description    String?
   organizationId String
   organization   Organization @relation(fields: [organizationId], references: [id])
-
-  tasks Task[]
+  tasks          Task[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -76,12 +71,10 @@ model Task {
   title       String
   description String?
   status      TaskStatus @default(TODO)
-
-  projectId String
-  project   Project @relation(fields: [projectId], references: [id])
-
-  assigneeId String?
-  assignee   User?   @relation("AssignedTasks", fields: [assigneeId], references: [id])
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id])
+  assigneeId  String?
+  assignee    User?      @relation("AssignedTasks", fields: [assigneeId], references: [id])
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

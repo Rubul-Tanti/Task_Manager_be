@@ -55,6 +55,7 @@ export type Role = (typeof Role)[keyof typeof Role]
 export const TaskStatus: {
   TODO: 'TODO',
   IN_PROGRESS: 'IN_PROGRESS',
+  IN_REVIEW: 'IN_REVIEW',
   DONE: 'DONE'
 };
 
@@ -2492,6 +2493,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
+    ownerId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2500,6 +2502,7 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
+    ownerId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -2508,6 +2511,7 @@ export namespace Prisma {
     id: number
     name: number
     description: number
+    ownerId: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -2518,6 +2522,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2526,6 +2531,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -2534,6 +2540,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
+    ownerId?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -2615,6 +2622,7 @@ export namespace Prisma {
     id: string
     name: string
     description: string | null
+    ownerId: string
     createdAt: Date
     updatedAt: Date
     _count: OrganizationCountAggregateOutputType | null
@@ -2640,6 +2648,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     memberships?: boolean | Organization$membershipsArgs<ExtArgs>
@@ -2651,6 +2660,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["organization"]>
@@ -2659,6 +2669,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["organization"]>
@@ -2667,11 +2678,12 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
+    ownerId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
+  export type OrganizationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "ownerId" | "createdAt" | "updatedAt", ExtArgs["result"]["organization"]>
   export type OrganizationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     memberships?: boolean | Organization$membershipsArgs<ExtArgs>
     projects?: boolean | Organization$projectsArgs<ExtArgs>
@@ -2690,6 +2702,7 @@ export namespace Prisma {
       id: string
       name: string
       description: string | null
+      ownerId: string
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["organization"]>
@@ -3120,6 +3133,7 @@ export namespace Prisma {
     readonly id: FieldRef<"Organization", 'String'>
     readonly name: FieldRef<"Organization", 'String'>
     readonly description: FieldRef<"Organization", 'String'>
+    readonly ownerId: FieldRef<"Organization", 'String'>
     readonly createdAt: FieldRef<"Organization", 'DateTime'>
     readonly updatedAt: FieldRef<"Organization", 'DateTime'>
   }
@@ -6897,6 +6911,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     description: 'description',
+    ownerId: 'ownerId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -7113,6 +7128,7 @@ export namespace Prisma {
     id?: StringFilter<"Organization"> | string
     name?: StringFilter<"Organization"> | string
     description?: StringNullableFilter<"Organization"> | string | null
+    ownerId?: StringFilter<"Organization"> | string
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     memberships?: MembershipListRelationFilter
@@ -7123,6 +7139,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     memberships?: MembershipOrderByRelationAggregateInput
@@ -7136,6 +7153,7 @@ export namespace Prisma {
     NOT?: OrganizationWhereInput | OrganizationWhereInput[]
     name?: StringFilter<"Organization"> | string
     description?: StringNullableFilter<"Organization"> | string | null
+    ownerId?: StringFilter<"Organization"> | string
     createdAt?: DateTimeFilter<"Organization"> | Date | string
     updatedAt?: DateTimeFilter<"Organization"> | Date | string
     memberships?: MembershipListRelationFilter
@@ -7146,6 +7164,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: OrganizationCountOrderByAggregateInput
@@ -7160,6 +7179,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"Organization"> | string
     name?: StringWithAggregatesFilter<"Organization"> | string
     description?: StringNullableWithAggregatesFilter<"Organization"> | string | null
+    ownerId?: StringWithAggregatesFilter<"Organization"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Organization"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Organization"> | Date | string
   }
@@ -7434,6 +7454,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     memberships?: MembershipCreateNestedManyWithoutOrganizationInput
@@ -7444,6 +7465,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     memberships?: MembershipUncheckedCreateNestedManyWithoutOrganizationInput
@@ -7454,6 +7476,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: MembershipUpdateManyWithoutOrganizationNestedInput
@@ -7464,6 +7487,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: MembershipUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -7474,6 +7498,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -7482,6 +7507,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7490,6 +7516,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -7846,6 +7873,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7854,6 +7882,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -7862,6 +7891,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
+    ownerId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -8690,6 +8720,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectCreateNestedManyWithoutOrganizationInput
@@ -8699,6 +8730,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     projects?: ProjectUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8755,6 +8787,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUpdateManyWithoutOrganizationNestedInput
@@ -8764,6 +8797,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     projects?: ProjectUncheckedUpdateManyWithoutOrganizationNestedInput
@@ -8773,6 +8807,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     memberships?: MembershipCreateNestedManyWithoutOrganizationInput
@@ -8782,6 +8817,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
+    ownerId: string
     createdAt?: Date | string
     updatedAt?: Date | string
     memberships?: MembershipUncheckedCreateNestedManyWithoutOrganizationInput
@@ -8837,6 +8873,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: MembershipUpdateManyWithoutOrganizationNestedInput
@@ -8846,6 +8883,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     memberships?: MembershipUncheckedUpdateManyWithoutOrganizationNestedInput
